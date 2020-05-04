@@ -17,8 +17,8 @@ logger = get_task_logger(__name__)
 
 
 @shared_task(ignore_result=True)
-def fetch_shipment_from_boloo():
-    job = group(fetch_shipment.si())
+def fetch_shipment_from_boloo(paginator=0):
+    job = group(fetch_shipment.si(paginator=paginator))
     job.apply_async()
     logger.info(
         "Fetch Shipment from Boloo Task ID is: %s" %
@@ -41,9 +41,8 @@ def get_header():
 
 
 @shared_task(ignore_result=True)
-def fetch_shipment():
+def fetch_shipment(paginator=0):
 
-    paginator = 0
     header = get_header()
     while True:
         paginator += 1
@@ -61,11 +60,18 @@ def fetch_shipment():
                 serializer.is_valid(raise_exception=True)
                 serializer.save()
                 continue
+            else:  # Break if no data found
+                break
+        elif response.status_code == 429:  # reach limit
+            logger.info('Limit Reached now waiting.')
+            fetch_shipment_from_boloo.apply_async(
+                countdown=60, paginator=paginator
+            )
         elif response.status_code == 401:
             header = get_header()
         break
     logger.info(
-        'Total pages scrapped: %s' % paginator
+        'Total pages scrapped: %s' % (paginator - 1)
     )
 
 
@@ -84,7 +90,7 @@ def fetch_shipment_details_from_boloo(shipment=None):
     )
 
 
-@shared_task(ignore_result=True)
+# @shared_task(ignore_result=True)
 def fetch_shipment_datails(shipment_id_list):
 
     header = get_header()

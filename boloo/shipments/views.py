@@ -18,8 +18,7 @@ class SyncShipmentView(APIView):
 
     def get(self, request, shipment_id=None):
         if shipment_id is None:
-            fetch_shipment_from_boloo.apply_async()
-            fetch_shipment_details_from_boloo.apply_async()
+            fetch_shipment_from_boloo.apply_async(paginator=0)
             return Response({
                 'message': 'Fetching data...'
             })
