@@ -88,8 +88,8 @@ class JWTAuthentication(authentication.BaseAuthentication):
         except jwt.exceptions.ExpiredSignatureError:
             msg = 'Authentication token has expired. Please login again to continue.'
             raise exceptions.AuthenticationFailed(msg)
-        except Exception as e:
-            msg = 'Invalid authentication. Could not decode token. %s', e
+        except Exception:
+            msg = 'Invalid authentication. Could not decode token.'
             raise exceptions.AuthenticationFailed(msg)
 
         if not user.is_active:
