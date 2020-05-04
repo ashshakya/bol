@@ -30,20 +30,20 @@ class Order(models.Model):
         max_length=50, null=True, blank=True, unique=True
     )
     orderId = models.CharField(
-        max_length=50, null=True, blank=True, unique=True
+        max_length=50, null=True, blank=True,
     )
     orderDate = models.DateTimeField(auto_now=True)
     latestDeliveryDate = models.DateTimeField(auto_now=True)
     ean = models.CharField(
-        max_length=50, null=True, blank=True, unique=True
+        max_length=50, null=True, blank=True,
     )
     title = models.CharField(
-        max_length=50, null=True, blank=True, unique=True
+        max_length=50, null=True, blank=True,
     )
     quantity = models.IntegerField(blank=True, null=True)
     offerPrice = models.FloatField(blank=True, null=True)
     offerCondition = models.CharField(
-        max_length=50, null=True, blank=True, unique=True
+        max_length=50, null=True, blank=True,
     )
     fulfilmentMethod = models.CharField(
         choices=FULFILMENT_CHOICES, max_length=10,
@@ -61,8 +61,8 @@ class Transport(models.Model):
         null=True, blank=True
     )
     transporterCode = models.CharField(
-        max_length=50, null=True, blank=True, unique=True
+        max_length=50, null=True, blank=True
     )
     trackAndTrace = models.CharField(
-        max_length=50, null=True, blank=True, unique=True
+        max_length=50, null=True, blank=True
     )

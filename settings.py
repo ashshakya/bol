@@ -154,8 +154,10 @@ BOLOO_URLS = {
     'SHIPMENT_LIST_URL': config('BOLOO_SHIPMENT_LIST_URL'),
 }
 
-BROKER_URL = 'redis://localhost:5672'
-CELERY_RESULT_BACKEND = 'redis://localhost:5672'
+BROKER_URL = config('BROKER_URL', default='redis://localhost:5672')
+CELERY_RESULT_BACKEND = config(
+    'CELERY_RESULT_BACKEND', default='redis://localhost:5672'
+)
 CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'

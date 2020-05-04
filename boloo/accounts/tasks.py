@@ -60,14 +60,6 @@ def fetch_shipment():
                 )
                 serializer.is_valid(raise_exception=True)
                 serializer.save()
-                # try:
-                #     fetch_shipment_datails(serializer.data)
-                # except Exception as e:
-                #     print(e)
-                #     logger.info(
-                #         'Unable to fetch shipment details[%s] due to %s',
-                #         serializer, str(e)
-                #     )
                 continue
         elif response.status_code == 401:
             header = get_header()
@@ -107,7 +99,7 @@ def fetch_shipment_datails(shipment_id_list):
             )
             if response.status_code == 401:
                 header = get_header()
-                continue
+                continue  # continue loop and retry
             elif response.status_code == 200:
                 response = response.json()
                 if response.get('shipments'):
@@ -116,4 +108,5 @@ def fetch_shipment_datails(shipment_id_list):
                     )
                     if shipment.is_valid():
                         shipment.save()
+        # break loop when everything is fine
         break
