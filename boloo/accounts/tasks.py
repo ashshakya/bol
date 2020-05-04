@@ -42,7 +42,11 @@ def get_header():
 
 @shared_task(ignore_result=True)
 def fetch_shipment(paginator=0):
-
+    """
+        Task to fetch the shipment list.
+        if rate limit reached, then wait till rate limit time over and
+        then proceeds again.
+    """
     header = get_header()
     while True:
         paginator += 1

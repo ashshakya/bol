@@ -4,8 +4,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 
 from boloo.accounts.tasks import (
-    fetch_shipment_from_boloo,
-    fetch_shipment_details_from_boloo
+    fetch_shipment_from_boloo
 )
 from boloo.shipments.serializers import SyncShipmentSerializer
 from boloo.shipments.models import Shipment

@@ -18,9 +18,6 @@ class TransportSerializer(serializers.ModelSerializer):
 
 
 class OrderSreializer(serializers.ModelSerializer):
-    """
-        sabhi field serializer me dalane hai aur fir check karna hai return respose and save karte time sara data save hua hai ya nahi 
-    """
     class Meta:
         model = Order
         fields = (
