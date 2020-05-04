@@ -34,7 +34,7 @@ class Seller(AbstractBaseUser):
         max_length=128, null=True, blank=True, unique=True
     )
     access_token = models.CharField(
-        max_length=128, null=True, blank=True, unique=True
+        max_length=1000, null=True, blank=True, unique=True
     )
 
     USERNAME_FIELD = 'email'
