@@ -80,7 +80,7 @@ WSGI_APPLICATION = 'boloo.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': config('RB_ENGINE'),
+        'ENGINE': config('DB_ENGINE'),
         'NAME': config('DB_NAME'),
         'USER': config('DB_USER'),
         'PASSWORD': config('DB_PASSWORD'),

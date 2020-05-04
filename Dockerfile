@@ -17,6 +17,7 @@ RUN apk update && apk add --no-cache curl-dev \
                                      libffi-dev \
                                      musl-dev \
                                      openssh \
+                                     postgresql-dev \
                                      vim \
                                      redis \
                                      #Pillow dependencies
