@@ -1,0 +1,8 @@
+build-essential
+libffi-dev
+libpq-dev
+libssl-dev
+postgresql
+postgresql-contrib
+python-dev
+python3-dev

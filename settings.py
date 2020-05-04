@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 
 import os
 
+from decouple import Csv, config
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PROJECT_DIR = os.path.abspath(os.path.dirname(__file__))
@@ -20,12 +22,12 @@ PROJECT_DIR = os.path.abspath(os.path.dirname(__file__))
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '-2yd29jg$ln_di=^h953frj3&o88$tc=)^&b5kkg7sthqd=et8'
+SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_DOMAINS = config('ALLOWED_DOMAINS', cast=Csv())
 
 
 # Application definition
@@ -78,8 +80,12 @@ WSGI_APPLICATION = 'boloo.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(PROJECT_DIR, 'db.sqlite3'),
+        'ENGINE': config('RB_ENGINE'),
+        'NAME': config('DB_NAME'),
+        'USER': config('DB_USER'),
+        'PASSWORD': config('DB_PASSWORD'),
+        'HOST': config('DB_HOST'),
+        'PORT': config('DB_PORT'),
     }
 }
 
@@ -136,15 +142,15 @@ REST_FRAMEWORK = {
     )
 }
 
-ACCESS_TOKEN_EXPIRES = 299
+ACCESS_TOKEN_EXPIRES = config('ACCESS_TOKEN_EXPIRY', default=299)
 
 
-BOLOO_CLIENT_ID = '69bd83f1-1172-4b02-821a-b5a2af5a32da'
-BOLOO_CLIENT_SECRET_KEY = 'NfainCcmbafiCUiutV7IKmjn8NbOCbw6Xc16a-_MDVyC0jhfbekNIpQ3z3sNUHhNJJEhK3ORSbh8WWbf9zSGpQ'
+BOLOO_CLIENT_ID = config('BOLOO_CLIENT_ID')
+BOLOO_CLIENT_SECRET_KEY = config('BOLOO_CLIENT_SECRET_KEY')
 
 BOLOO_URLS = {
-    'ACCESS_TOKEN_URL': 'https://login.bol.com/token?grant_type=client_credentials',
-    'SHIPMENT_LIST_URL': 'https://api.bol.com/retailer/shipments/',
+    'ACCESS_TOKEN_URL': config('BOLOO_ACCESS_TOKEN_URL'),
+    'SHIPMENT_LIST_URL': config('BOLOO_SHIPMENT_LIST_URL'),
 }
 
 BROKER_URL = 'redis://localhost:5672'
